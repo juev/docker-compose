@@ -7,19 +7,47 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+    environment:
+      - CF_API_EMAIL=${CF_API_EMAIL}
+      - CF_API_KEY=${CF_API_KEY}
     command:
+      # Globals
+      - "--global.sendAnonymousUsage=false"
       - "--accesslog=true"
       - "--api.insecure=true"
+      # Docker
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      # Entrypoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      # LetsEncrypt
+      # - "--certificatesresolvers.mydnschallenge.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.mydnschallenge.acme.email=${CF_API_EMAIL}"
+      - "--certificatesresolvers.mydnschallenge.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.mydnschallenge.acme.storage=/etc/traefik/acme.json"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/localtime:/etc/localtime
+      - "./config/acme.json:/etc/traefik/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/localtime:/etc/localtime"
     networks:
       - web
+    labels:
+      # API
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.juev.org`)"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      - "traefik.http.services.traefik.loadbalancer.server.scheme=http"
+      # Wildcard cert
+      - "traefik.http.routers.traefik.tls.domains[0].main=juev.org"
+      - "traefik.http.routers.traefik.tls.domains[0].sans=*.juev.org"
+      - "traefik.http.routers.traefik.tls.certresolver=mydnschallenge"
+      # Global http-->https
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
 networks:
   web:

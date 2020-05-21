@@ -18,6 +18,8 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=webdav"
       - "traefik.docker.network=web"
+      - "traefik.http.routers.webdav.entrypoints=websecure"
+      - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
 networks:
   web:
     external: true

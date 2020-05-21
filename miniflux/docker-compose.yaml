@@ -36,6 +36,8 @@ services:
       - "traefik.backend=miniflux"
       - "traefik.docker.network=web"
       - "traefik.port=8080"
+      - "traefik.http.routers.miniflux.entrypoints=websecure"
+      - "traefik.http.routers.miniflux.tls.certresolver=mydnschallenge"
 networks:
   internal:
     ipam:

@@ -16,6 +16,8 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=shiori"
       - "traefik.docker.network=web"
+      - "traefik.http.routers.shiori.entrypoints=websecure"
+      - "traefik.http.routers.shiori.tls.certresolver=mydnschallenge"
 networks:
   web:
     external: true
