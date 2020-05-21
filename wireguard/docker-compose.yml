@@ -1,0 +1,35 @@
+---
+version: "3"
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/Moscow
+      - SERVERURL=auto
+      - SERVERPORT=51820 #optional
+      - PEERS=5 #optional
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+    volumes:
+      - $PWD/config:/config
+        # - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      wireguard:
+          ipv4_address: 172.24.0.2
+networks:
+  wireguard:
+    ipam:
+        driver: default
+        config:
+            - subnet: 172.24.0.0/16

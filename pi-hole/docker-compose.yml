@@ -1,0 +1,32 @@
+---
+version: "3"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    environment:
+      TZ: 'Europe/Moscow'
+      WEBPASSWORD: "${WEBPASSWORD}"
+      DNS1: '1.1.1.1'
+      DNS2: '1.0.0.1'
+    # Volumes store your data between container upgrades
+    volumes:
+       - './etc-pihole/:/etc/pihole/'
+       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks:
+      wireguard:
+          ipv4_address: 172.24.0.3
+networks:
+  wireguard:
+    ipam:
+        driver: default
+        config:
+            - subnet: 172.24.0.0/16

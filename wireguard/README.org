@@ -1,0 +1,9 @@
+* wireguard
+
+Just start container:
+
+#+begin_src shell
+  $ docker-compose up -d
+#+end_src
+
+After 2 minutes you have worked server and ~config~ directory with config files for connecting.
