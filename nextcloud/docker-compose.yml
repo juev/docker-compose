@@ -1,0 +1,72 @@
+version: '3.3'
+
+services:
+  nextcloud-database:
+    image: mariadb
+    container_name: cloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - $PWD/db:/var/lib/mysql # :Z is only for SELinux-enabled systems like Fedora. Remove if necessary.
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+    networks:
+      - backend
+    logging:
+      options:
+        max-size: '12m'
+        max-file: '5'
+      driver: json-file
+
+  nextcloud-app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    restart: always
+    volumes:
+      - $PWD/config:/var/www/html/config # :Z is only for SELinux-enabled systems like Fedora. Remove if necessary.
+      - $PWD/cloud:/var/www/html
+      - $PWD/apps:/var/www/html/apps
+      - $PWD/data:/var/www/html/data
+    environment:
+      - NEXTCLOUD_DATA_DIR=/var/www/html/data
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=$MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=nextcloud-database
+    links:
+      - nextcloud-database
+    networks:
+      - backend
+      - web
+    # If you like to bypass traefik, then uncomment these two lines. Nextcloud will then be available on port 80
+    # Remember to allow the port temporarily on your firewall: sudo firewall-cmd --zone=public --add-port=80/tcp
+    #ports:
+    #  - "80:80"
+    logging:
+      options:
+        max-size: '12m'
+        max-file: '5'
+      driver: json-file
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.docker.network=web"
+      # Entrypoint and TLS
+      - "traefik.http.routers.cloud.rule=Host(`cloud.juev.org`)" # Put in your hostname here, e.g. subdomain.domain.tld
+      # Middlewares:
+      - "traefik.http.routers.cloud.middlewares=cloud@docker,cloud-dav@docker"
+      # Middleware cloud adds additional headers:
+      - "traefik.http.middlewares.cloud.headers.customFrameOptionsValue=SAMEORIGIN"
+      - "traefik.http.middlewares.cloud.headers.framedeny=true"
+      # Middleware cloud-dav replaces .well-known paths for caldav and carddav with proper nextcloud path
+      - "traefik.http.middlewares.cloud-dav.replacepathregex.regex=^/.well-known/ca(l|rd)dav"
+      - "traefik.http.middlewares.cloud-dav.replacepathregex.replacement=/remote.php/dav/"
+
+networks:
+  backend: # this network is part of the nextcloud stack
+    external: false
+  web:
+    external: true
