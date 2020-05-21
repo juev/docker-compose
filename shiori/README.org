@@ -1,0 +1,7 @@
+* shiori
+
+Just run container:
+
+#+begin_src shell
+  $ docker-compose up -d
+#+end_src

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  shiori:
+    image: radhifadlillah/shiori
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./shiori:/srv/shiori
+    environment:
+      - SHIORI_DIR=/srv/shiori
+    networks:
+      - web
+    restart: unless-stopped
+    labels:
+      - "traefik.http.routers.shiori.rule=Host(`shiori.juev.org`)"
+      - "traefik.enable=true"
+      - "traefik.backend=shiori"
+      - "traefik.docker.network=web"
+networks:
+  web:
+    external: true
