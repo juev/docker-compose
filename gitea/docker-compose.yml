@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  gitea:
+    image: gitea/gitea:latest
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    ports:
+      - "7999:22"
+    networks:
+      - web
+      - git
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - traefik.http.routers.gitea.rule=Host(`git.juev.org`)
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.services.gitea-service.loadbalancer.server.port=3000
+
+networks:
+  web:
+    external: true
+  git:
+    external: true

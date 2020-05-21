@@ -1,0 +1,11 @@
+* gitea
+
+Run ~gitea~ server.
+
+Just run container:
+
+#+begin_src shell
+  $ docker-compose up -d
+#+end_src
+
+*Issue*: ssh clone do not working
