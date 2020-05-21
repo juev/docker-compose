@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=miniflux
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - miniflux-database:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - internal
+  miniflux:
+    image: miniflux/miniflux:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      - CREATE_ADMIN=1
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - BASE_URL=${BASE_URL}
+      - POCKET_CONSUMER_KEY=${POCKET_CONSUMER_KEY}
+      - POLLING_FREQUENCY=10
+      - HTTPS=1
+    networks:
+      - internal
+      - web
+    labels:
+      - "traefik.http.routers.miniflux.rule=Host(`reader.juev.org`)"
+      - "traefik.enable=true"
+      - "traefik.backend=miniflux"
+      - "traefik.docker.network=web"
+      - "traefik.port=8080"
+networks:
+  internal:
+    ipam:
+      config:
+        - subnet: 172.16.22.0/24
+  web:
+    external: true
+
+volumes:
+  miniflux-database:

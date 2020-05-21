@@ -1,0 +1,13 @@
+* traefik
+
+What we’re going to do is configure a docker network - let’s call it web - that every service will be placed into that’s actually connected to the internet. Since this network will be service agnostic we’ll create it as an external network directly with the docker cli.
+
+#+begin_src bash
+  $ docker network create web
+#+end_src
+
+Don’t forget to boot up traefik via docker-compose from within it’s directory and we’re good to go ✨
+
+#+begin_src bash
+  $ docker-compose up -d
+#+end_src
