@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  fireflyiii:
+    container_name: fireflyiii
+    image: jc5x/firefly-iii:latest
+    volumes:
+      - ./export:/var/www/firefly-iii/storage/export
+      - ./upload:/var/www/firefly-iii/storage/upload
+    env_file: .env
+    depends_on:
+      - fireflyiiidb
+    networks:
+      - internal
+      - web
+    labels:
+      - "traefik.http.routers.fireflyiii.rule=Host(`money.juev.org`)"
+      - "traefik.enable=true"
+      - "traefik.backend=fireflyiii"
+      - "traefik.docker.network=web"
+      - "traefik.port=80"
+      - "traefik.http.routers.fireflyiii.entrypoints=websecure"
+      - "traefik.http.routers.fireflyiii.tls.certresolver=mydnschallenge"
+
+  fireflyiiidb:
+    container_name: firefluiiidb
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=firefly
+      - POSTGRES_PASSWORD=secret_firefly_password
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: false
+  web:
+    external: true

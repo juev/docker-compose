@@ -1,0 +1,13 @@
+* firefly
+
+Just prepare ~.env~ file:
+
+#+begin_src shell
+  cp .env-example .env
+#+end_src
+
+Then start application:
+
+#+begin_src shell
+  docker-compose up -D
+#+end_src
