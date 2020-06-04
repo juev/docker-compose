@@ -11,3 +11,9 @@ Don’t forget to boot up traefik via docker-compose from within it’s director
 #+begin_src bash
   $ docker-compose up -d
 #+end_src
+
+For using TLS, change file permisions:
+
+#+begin_src bash
+  $ chmod 0600 config/acme.json
+#+end_src
