@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image:  postgres:12-alpine
+    restart: always
     environment:
       - POSTGRES_USER=miniflux
       - POSTGRES_PASSWORD=secret
@@ -13,6 +14,7 @@ services:
       - internal
   miniflux:
     image: miniflux/miniflux:latest
+    restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
     depends_on:
@@ -26,6 +28,8 @@ services:
       - BASE_URL=${BASE_URL}
       - POCKET_CONSUMER_KEY=${POCKET_CONSUMER_KEY}
       - POLLING_FREQUENCY=10
+      - BATCH_SIZE=500
+      - WORKER_POOL_SIZE=50
       - HTTPS=1
     networks:
       - internal
