@@ -1,0 +1,26 @@
+version: '3'
+services:
+  espial:
+    image: 'jonschoning/espial:espial'
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - '.:/app/data'
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - IP_FROM_HEADER=true
+      - SQLITE_DATABASE=/app/data/espial.sqlite3
+      # - DETAILED_LOGGING=true
+      # - SHOULD_LOG_ALL=true
+      # - ARCHIVE_SOCKS_PROXY_HOST=localhost 
+      # - ARCHIVE_SOCKS_PROXY_PORT=8888
+      # - SOURCE_CODE_URI=https://github.com/jonschoning/espial
+    labels:
+      - "traefik.http.routers.miniflux.rule=Host(`espial.juev.org`)"
+      - "traefik.enable=true"
+      - "traefik.backend=espial"
+      - "traefik.docker.network=web"
+      - "traefik.port=3000"
+      - "traefik.http.routers.espial.entrypoints=websecure"
+      - "traefik.http.routers.espial.tls.certresolver=mydnschallenge"
