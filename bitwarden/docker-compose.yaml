@@ -14,11 +14,12 @@ services:
       - web
     labels:
       - traefik.enable=true
-      - traefik.docker.network=traefik
+      - traefik.docker.network=web
       - traefik.http.middlewares.redirect-https.redirectScheme.scheme=https
       - traefik.http.middlewares.redirect-https.redirectScheme.permanent=true
       - traefik.http.routers.bitwarden-ui-https.rule=Host(`bt.juev.org`)
       - traefik.http.routers.bitwarden-ui-https.entrypoints=websecure
+      - traefik.http.routers.bitwarden-ui-https.tls.certresolver=mydnschallenge
       - traefik.http.routers.bitwarden-ui-https.tls=true
       - traefik.http.routers.bitwarden-ui-https.service=bitwarden-ui
       - traefik.http.routers.bitwarden-ui-http.rule=Host(`bt.juev.org`)
@@ -28,6 +29,7 @@ services:
       - traefik.http.services.bitwarden-ui.loadbalancer.server.port=80
       - traefik.http.routers.bitwarden-websocket-https.rule=Host(`bt.juev.org`) && Path(`/notifications/hub`)
       - traefik.http.routers.bitwarden-websocket-https.entrypoints=websecure
+      - traefik.http.routers.bitwarden-websocket-https.tls.certresolver=mydnschallenge
       - traefik.http.routers.bitwarden-websocket-https.tls=true
       - traefik.http.routers.bitwarden-websocket-https.service=bitwarden-websocket
       - traefik.http.routers.bitwarden-websocket-http.rule=Host(`bt.juev.org`) && Path(`/notifications/hub`)
