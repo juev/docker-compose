@@ -8,6 +8,8 @@ services:
     restart: always
     volumes:
       - $PWD/db:/var/lib/mysql # :Z is only for SELinux-enabled systems like Fedora. Remove if necessary.
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_PASSWORD
@@ -30,6 +32,8 @@ services:
       - $PWD/cloud:/var/www/html
       - $PWD/apps:/var/www/html/apps
       - $PWD/data:/var/www/html/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - NEXTCLOUD_DATA_DIR=/var/www/html/data
       - MYSQL_DATABASE

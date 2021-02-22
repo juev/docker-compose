@@ -4,7 +4,8 @@ services:
     image: 'jonschoning/espial:espial'
     restart: always
     volumes:
-      - '.:/app/data'
+      - 'data:/app/data'
+      - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     environment:
       - IP_FROM_HEADER=true
@@ -22,3 +23,5 @@ services:
       - "traefik.port=3000"
       # - "traefik.http.routers.espial.entrypoints=websecure"
       # - "traefik.http.routers.espial.tls.certresolver=mydnschallenge"
+volumes:
+  data:

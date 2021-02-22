@@ -13,7 +13,7 @@ services:
       - web
       - git
     volumes:
-      - ./gitea:/data
+      - gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
@@ -27,3 +27,6 @@ networks:
     external: true
   git:
     external: true
+
+volumes:
+  gitea:

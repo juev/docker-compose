@@ -4,8 +4,9 @@ services:
   shiori:
     image: radhifadlillah/shiori
     volumes:
+      - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./shiori:/srv/shiori
+      - shiori:/srv/shiori
     environment:
       - SHIORI_DIR=/srv/shiori
     networks:
@@ -21,3 +22,6 @@ services:
 networks:
   web:
     external: true
+
+volumes:
+  shiori:

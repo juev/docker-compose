@@ -5,9 +5,8 @@ services:
     container_name: fireflyiii
     image: jc5x/firefly-iii:latest
     volumes:
-      - ./export:/var/www/firefly-iii/storage/export
-      - ./upload:/var/www/firefly-iii/storage/upload
-    env_file: .env
+      - export:/var/www/firefly-iii/storage/export
+      - upload:/var/www/firefly-iii/storage/upload
     depends_on:
       - fireflyiiidb
     networks:
@@ -29,7 +28,7 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     networks:
       - internal
 
@@ -38,3 +37,8 @@ networks:
     external: false
   web:
     external: true
+
+volumes:
+  export:
+  upload:
+  db:

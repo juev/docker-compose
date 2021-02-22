@@ -19,6 +19,8 @@ services:
     volumes:
       - $PWD/config:/config
         # - /lib/modules:/lib/modules
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 51820:51820/udp
     sysctls:

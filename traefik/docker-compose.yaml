@@ -28,9 +28,10 @@ services:
       - "--certificatesresolvers.mydnschallenge.acme.dnschallenge.provider=cloudflare"
       - "--certificatesresolvers.mydnschallenge.acme.storage=/etc/traefik/acme.json"
     volumes:
-      - "./config/acme.json:/etc/traefik/acme.json"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/etc/localtime:/etc/localtime"
+      - ./config/acme.json:/etc/traefik/acme.json
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime
     networks:
       - web
     labels:

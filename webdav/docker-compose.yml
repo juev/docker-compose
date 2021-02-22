@@ -10,6 +10,7 @@ services:
       PASSWORD
     volumes:
       - $PWD/dav:/var/lib/dav
+      - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     networks:
       - web
