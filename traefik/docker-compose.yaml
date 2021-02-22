@@ -43,12 +43,6 @@ services:
       - "traefik.http.routers.traefik.tls.domains[0].main=juev.org"
       - "traefik.http.routers.traefik.tls.domains[0].sans=*.juev.org"
       - "traefik.http.routers.traefik.tls.certresolver=mydnschallenge"
-      # Global http-->https
-      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:[a-z-.]+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-
 networks:
   web:
     external: true
