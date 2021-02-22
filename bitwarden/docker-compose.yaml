@@ -8,34 +8,40 @@ services:
       - ./bw_data:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - WEBSOCKET_ENABLED=true
-      - SIGNUPS_DOMAINS_WHITELIST=juev.org
-      - ADMIN_TOKEN=${ADMIN_TOKEN}
+      - LOG_FILE=/data/bitwarden.log
+      - WEBSOCKET_ENABLED=true            # required for websockets
+      - SHOW_PASSWORD_HINT=false
+      - DOMAIN=https://${DOMAIN}          # DOMAIN is set in .env but doesn't have protocol prefix
+      - SMTP_FROM_NAME=Bitwarden (${DOMAIN})
+      - IP_HEADER=X-Forwarded-For
+      - ADMIN_TOKEN                       # Value-less variables are set in .env
+      - SIGNUPS_ALLOWED
+      - SIGNUPS_VERIFY
+      - SMTP_HOST
+      - SMTP_FROM
+      - SMTP_PORT
+      - SMTP_SSL
+      - SMTP_USERNAME
+      - SMTP_PASSWORD
     networks:
       - web
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik
-      # - traefik.http.middlewares.redirect-https.redirectScheme.scheme=https
-      # - traefik.http.middlewares.redirect-https.redirectScheme.permanent=true
-      - traefik.http.routers.bitwarden-ui-https.rule=Host(`bw.juev.org`)
+      - traefik.http.routers.bitwarden-ui-https.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.bitwarden-ui-https.entrypoints=websecure
       - traefik.http.routers.bitwarden-ui-https.tls=true
-      # - traefik.http.routers.bitwarden-ui-https.tls.certresolver=mydnschallenge
       - traefik.http.routers.bitwarden-ui-https.service=bitwarden-ui
-      - traefik.http.routers.bitwarden-ui-http.rule=Host(`bw.juev.org`)
+      - traefik.http.routers.bitwarden-ui-http.rule=Host(`${DOMAIN}`)
       - traefik.http.routers.bitwarden-ui-http.entrypoints=web
-      # - traefik.http.routers.bitwarden-ui-http.middlewares=redirect-https
       - traefik.http.routers.bitwarden-ui-http.service=bitwarden-ui
       - traefik.http.services.bitwarden-ui.loadbalancer.server.port=80
-      - traefik.http.routers.bitwarden-websocket-https.rule=Host(`bw.juev.org`) && Path(`/notifications/hub`)
+      - traefik.http.routers.bitwarden-websocket-https.rule=Host(`${DOMAIN}`) && Path(`/notifications/hub`)
       - traefik.http.routers.bitwarden-websocket-https.entrypoints=websecure
       - traefik.http.routers.bitwarden-websocket-https.tls=true
-      # - traefik.http.routers.bitwarden-websocket-https.tls.certresolver=mydnschallenge
       - traefik.http.routers.bitwarden-websocket-https.service=bitwarden-websocket
-      - traefik.http.routers.bitwarden-websocket-http.rule=Host(`bw.juev.org`) && Path(`/notifications/hub`)
+      - traefik.http.routers.bitwarden-websocket-http.rule=Host(`${DOMAIN}`) && Path(`/notifications/hub`)
       - traefik.http.routers.bitwarden-websocket-http.entrypoints=web
-      # - traefik.http.routers.bitwarden-websocket-http.middlewares=redirect-https
       - traefik.http.routers.bitwarden-websocket-http.service=bitwarden-websocket
       - traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012
 networks:
