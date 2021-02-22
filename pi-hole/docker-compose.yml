@@ -3,7 +3,7 @@ version: "3"
 services:
   pihole:
     container_name: pihole
-    domainname: "pi.juev.org"
+    domainname: "${DOMAIN}"
     image: pihole/pihole:latest
     ports:
       - "53:53/tcp"
@@ -11,11 +11,11 @@ services:
       - "67:67/udp"
     environment:
       TZ: 'Europe/Moscow'
-      WEBPASSWORD: "${WEBPASSWORD}"
+      WEBPASSWORD
       DNS1: '1.1.1.1'
       DNS2: '1.0.0.1'
       PROXY_LOCATION: pihole
-      VIRTUAL_HOST: "pi.juev.org"
+      VIRTUAL_HOST: "${DOMAIN}"
       VIRTUAL_PORT: 80
     # Volumes store your data between container upgrades
     volumes:
@@ -33,12 +33,12 @@ services:
     networks:
       - web
     labels:
-      - "traefik.http.routers.pihole.rule=Host(`pi.juev.org`)"
+      - "traefik.http.routers.pihole.rule=Host(`${DOMAIN}`)"
       - "traefik.enable=true"
       - "traefik.backend=pihole"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.pihole.entrypoints=websecure"
-      - "traefik.http.routers.pihole.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.pihole.entrypoints=websecure"
+      # - "traefik.http.routers.pihole.tls.certresolver=mydnschallenge"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"
 networks:
   web:

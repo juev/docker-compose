@@ -14,20 +14,20 @@ services:
       - internal
       - web
     labels:
-      - "traefik.http.routers.fireflyiii.rule=Host(`money.juev.org`)"
+      - "traefik.http.routers.fireflyiii.rule=Host(`${DOMAIN}`)"
       - "traefik.enable=true"
       - "traefik.backend=fireflyiii"
       - "traefik.docker.network=web"
       - "traefik.port=80"
-      - "traefik.http.routers.fireflyiii.entrypoints=websecure"
-      - "traefik.http.routers.fireflyiii.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.fireflyiii.entrypoints=websecure"
+      # - "traefik.http.routers.fireflyiii.tls.certresolver=mydnschallenge"
 
   fireflyiiidb:
     container_name: firefluiiidb
     image: postgres:10-alpine
     environment:
-      - POSTGRES_USER=firefly
-      - POSTGRES_PASSWORD=secret_firefly_password
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./db:/var/lib/postgresql/data
     networks:

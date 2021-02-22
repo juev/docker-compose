@@ -5,8 +5,8 @@ services:
     image:  postgres:12-alpine
     restart: always
     environment:
-      - POSTGRES_USER=miniflux
-      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
       - miniflux-database:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
@@ -23,10 +23,10 @@ services:
       - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable
       - RUN_MIGRATIONS=1
       - CREATE_ADMIN=1
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - BASE_URL=${BASE_URL}
-      - POCKET_CONSUMER_KEY=${POCKET_CONSUMER_KEY}
+      - ADMIN_USERNAME
+      - ADMIN_PASSWORD
+      - BASE_URL=https://${BASE_URL}
+      - POCKET_CONSUMER_KEY
       - POLLING_FREQUENCY=10
       - BATCH_SIZE=500
       - WORKER_POOL_SIZE=50
@@ -35,13 +35,13 @@ services:
       - internal
       - web
     labels:
-      - "traefik.http.routers.miniflux.rule=Host(`reader.juev.org`)"
+      - "traefik.http.routers.miniflux.rule=Host(`${BASE_URL}`)"
       - "traefik.enable=true"
       - "traefik.backend=miniflux"
       - "traefik.docker.network=web"
       - "traefik.port=8080"
-      - "traefik.http.routers.miniflux.entrypoints=websecure"
-      - "traefik.http.routers.miniflux.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.miniflux.entrypoints=websecure"
+      # - "traefik.http.routers.miniflux.tls.certresolver=mydnschallenge"
 networks:
   internal:
     ipam:

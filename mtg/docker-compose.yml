@@ -11,10 +11,10 @@ services:
     environment:
       - DETAILED_LOGGING=true
     labels:
-      - "traefik.http.routers.mtg.rule=Host(`mtg.juev.org`)"
+      - "traefik.http.routers.mtg.rule=Host(`${DOMAIN}`)"
       - "traefik.enable=true"
       - "traefik.backend=mtg"
       - "traefik.docker.network=web"
       - "traefik.port=3128"
-      - "traefik.http.routers.mtg.entrypoints=websecure"
-      - "traefik.http.routers.mtg.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.mtg.entrypoints=websecure"
+      # - "traefik.http.routers.mtg.tls.certresolver=mydnschallenge"

@@ -6,20 +6,20 @@ services:
     restart: always
     environment:
       AUTH_TYPE: Digest
-      USERNAME: "${USERNAME}"
-      PASSWORD: "${PASSWORD}"
+      USERNAME
+      PASSWORD
     volumes:
       - $PWD/dav:/var/lib/dav
       - /etc/localtime:/etc/localtime:ro
     networks:
       - web
     labels:
-      - "traefik.http.routers.webdav.rule=Host(`dav.juev.org`)"
+      - "traefik.http.routers.webdav.rule=Host(`${DOMAIN}`)"
       - "traefik.enable=true"
       - "traefik.backend=webdav"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.webdav.entrypoints=websecure"
-      - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.webdav.entrypoints=websecure"
+      # - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
 networks:
   web:
     external: true

@@ -17,7 +17,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
-      - traefik.http.routers.gitea.rule=Host(`git.juev.org`)
+      - traefik.http.routers.gitea.rule=Host(`${DOMAIN}`)
       - traefik.enable=true
       - traefik.docker.network=web
       - traefik.http.services.gitea-service.loadbalancer.server.port=3000

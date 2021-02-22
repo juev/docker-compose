@@ -12,12 +12,12 @@ services:
       - web
     restart: unless-stopped
     labels:
-      - "traefik.http.routers.shiori.rule=Host(`shiori.juev.org`)"
+      - "traefik.http.routers.shiori.rule=Host(`${DOMAIN}`)"
       - "traefik.enable=true"
       - "traefik.backend=shiori"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.shiori.entrypoints=websecure"
-      - "traefik.http.routers.shiori.tls.certresolver=mydnschallenge"
+      # - "traefik.http.routers.shiori.entrypoints=websecure"
+      # - "traefik.http.routers.shiori.tls.certresolver=mydnschallenge"
 networks:
   web:
     external: true

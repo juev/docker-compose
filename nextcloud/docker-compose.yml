@@ -9,10 +9,10 @@ services:
     volumes:
       - $PWD/db:/var/lib/mysql # :Z is only for SELinux-enabled systems like Fedora. Remove if necessary.
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
     networks:
       - backend
     logging:
@@ -32,9 +32,9 @@ services:
       - $PWD/data:/var/www/html/data
     environment:
       - NEXTCLOUD_DATA_DIR=/var/www/html/data
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=$MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
       - MYSQL_HOST=nextcloud-database
     links:
       - nextcloud-database
@@ -55,7 +55,7 @@ services:
       - "traefik.port=80"
       - "traefik.docker.network=web"
       # Entrypoint and TLS
-      - "traefik.http.routers.cloud.rule=Host(`cloud.juev.org`)" # Put in your hostname here, e.g. subdomain.domain.tld
+      - "traefik.http.routers.cloud.rule=Host(`${DOMAIN}`)" # Put in your hostname here, e.g. subdomain.domain.tld
       # Middlewares:
       - "traefik.http.routers.cloud.middlewares=cloud@docker,cloud-dav@docker"
       # Middleware cloud adds additional headers:

@@ -8,8 +8,8 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - CF_API_EMAIL=${CF_API_EMAIL}
-      - CF_API_KEY=${CF_API_KEY}
+      - CF_API_EMAIL
+      - CF_API_KEY
     command:
       # Globals
       - "--global.sendAnonymousUsage=false"
@@ -36,7 +36,7 @@ services:
     labels:
       # API
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.juev.org`)"
+      - "traefik.http.routers.traefik.rule=Host(`${DOMAIN}`)"
       - "traefik.http.services.traefik.loadbalancer.server.port=8080"
       - "traefik.http.services.traefik.loadbalancer.server.scheme=http"
       # Wildcard cert
