@@ -18,7 +18,7 @@ services:
       - INTERNAL_SUBNET=10.13.13.0 #optional
     volumes:
       - $PWD/config:/config
-        # - /lib/modules:/lib/modules
+      - /lib/modules:/lib/modules
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -26,12 +26,3 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
-    networks:
-      wireguard:
-          ipv4_address: 172.24.0.2
-networks:
-  wireguard:
-    ipam:
-        driver: default
-        config:
-            - subnet: 172.24.0.0/16
