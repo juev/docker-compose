@@ -23,7 +23,7 @@ services:
 
   fireflyiiidb:
     container_name: firefluiiidb
-    image: postgres:10-alpine
+    image: postgres:13-alpine
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
