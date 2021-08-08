@@ -5,9 +5,9 @@ services:
     container_name: webdav
     restart: always
     environment:
-      AUTH_TYPE: Digest
-      USERNAME
-      PASSWORD
+      - AUTH_TYPE=Digest
+      - USERNAME
+      - PASSWORD
     volumes:
       - $PWD/dav:/var/lib/dav
       - /etc/timezone:/etc/timezone:ro
@@ -19,8 +19,8 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=webdav"
       - "traefik.docker.network=web"
-      # - "traefik.http.routers.webdav.entrypoints=websecure"
-      # - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
+      - "traefik.http.routers.webdav.entrypoints=websecure"
+      - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
 networks:
   web:
     external: true
