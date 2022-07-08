@@ -1,0 +1,21 @@
+{
+	acme_dns cloudflare {$CLOUDFLARE_TOKEN}
+}
+
+(header_options) {
+	header Strict-Transport-Security "max-age=31536000;"
+	header X-XSS-Protection "1; mode=block"
+	header X-Frame-Options "DENY"
+	header X-Robots-Tag "none"
+	header -Server
+}
+
+link.example.org {
+	import header_options
+	reverse_proxy linkding:9090
+}
+
+reader.example.org {
+	import header_options
+	reverse_proxy miniflux:8080
+}
