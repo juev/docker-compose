@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    restart: always
+    environment:
+      DOMAIN: "https://vault.example.org"  # Your domain; vaultwarden needs to know it's https to work properly with attachments
+    env_file:
+      - env
+    volumes:
+      - ./data:/data
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - vaultwarden
