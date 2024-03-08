@@ -1,26 +1,25 @@
 version: '3'
 services:
+
   webdav:
     image: bytemark/webdav
-    container_name: webdav
     restart: always
     environment:
-      - AUTH_TYPE=Digest
+      - AUTH_TYPE
       - USERNAME
       - PASSWORD
     volumes:
-      - $PWD/dav:/var/lib/dav
-      - /etc/timezone:/etc/timezone:ro
+      - ./dav:/var/lib/dav
+      #- /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    networks:
-      - web
-    labels:
-      - "traefik.http.routers.webdav.rule=Host(`${DOMAIN}`)"
-      - "traefik.enable=true"
-      - "traefik.backend=webdav"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.webdav.entrypoints=websecure"
-      - "traefik.http.routers.webdav.tls.certresolver=mydnschallenge"
-networks:
-  web:
-    external: true
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - webdav
