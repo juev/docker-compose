@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:1.21
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    volumes:
+      - ./data:/data
+      - ./config:/etc/gitea
+      - /etc/localtime:/etc/localtime:ro
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - forgejo
