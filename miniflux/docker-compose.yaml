@@ -1,48 +1,44 @@
-version: '3.4'
+version: '3'
+
 services:
   miniflux:
     image: miniflux/miniflux:latest
-    restart: unless-stopped
-    #ports:
-    #  - "127.0.0.1:8080:8080"
-    dns:
-      - 8.8.8.8
-      - 9.9.9.9
+    restart: always
     depends_on:
-      - db
-    networks:
-      - back
-      - caddy-network
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable
-      - RUN_MIGRATIONS=1
-      - CREATE_ADMIN=1
-      - TZ=Europe/Moscow
+      - RUN_MIGRATIONS
+      - CREATE_ADMIN
       - ADMIN_USERNAME
       - ADMIN_PASSWORD
-      - POLLING_FREQUENCY
-      - POLLING_PARSING_ERROR_LIMIT
-      - BASE_URL
+      - POLLING_FREQUENCY=10
       - POCKET_CONSUMER_KEY
-      - PROXY_IMAGES
-        #- POLLING_SCHEDULER
+      - BASE_URL=https://reader.example.org
+      - TZ=Europe/Moscow
+
   db:
-    image: postgres:latest
-    restart: unless-stopped
+    image: postgres:15
+    restart: always
     environment:
       - POSTGRES_USER=miniflux
       - POSTGRES_PASSWORD=secret
-    networks:
-      - back
+      - POSTGRES_DB=miniflux
     volumes:
       - miniflux-db:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
       start_period: 30s
-volumes:
-  miniflux-db:
-networks:
-  back:
-  caddy-network:
-    external: true
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - miniflux
