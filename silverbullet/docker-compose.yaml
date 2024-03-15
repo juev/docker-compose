@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  silverbullet:
+    image: zefhemel/silverbullet
+    restart: always
+    user: root
+    environment:
+      - SB_USER=admin:admin
+    volumes:
+      - ./data:/space
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - silverbullet
