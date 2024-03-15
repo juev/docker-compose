@@ -1,0 +1,39 @@
+{
+    "inbounds": [{
+        "port": 1080,
+        "listen": "0.0.0.0",
+        "protocol": "socks",
+        "settings": {
+            "udp": true
+        }
+    },
+    {
+        "port": 8080,
+        "listen": "0.0.0.0",
+        "protocol": "http",
+        "settings": {
+            "allowTransparent": true
+        }
+    }],
+    "outbounds": [{
+        "protocol": "shadowsocks",
+        "settings": {
+            "servers": [
+                {}
+            ]
+        }
+    },
+    {
+        "protocol": "freedom",
+        "tag": "direct",
+        "settings": {}
+    }],
+    "routing": {
+        "domainStrategy": "IPOnDemand",
+        "rules": [{
+            "type": "field",
+            "ip": ["geoip:private"],
+            "outboundTag": "direct"
+        }]
+    }
+}
