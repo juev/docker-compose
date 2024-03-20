@@ -1,3 +1,0 @@
-* mtg
-
-https://hub.docker.com/r/nineseconds/mtg

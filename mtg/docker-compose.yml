@@ -3,19 +3,20 @@ services:
   mtg:
     image: 'nineseconds/mtg:stable'
     restart: always
-    ports:
-      - "3128:3128"
-      - "3129:3129"
+    # ports:
+    #   - "443:443"
     volumes:
       - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+      # - /etc/localtime:/etc/localtime:ro
+    command: simple-run 0.0.0.0:443 $SECRET
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
     environment:
-      - DETAILED_LOGGING=true
-    labels:
-      - "traefik.http.routers.mtg.rule=Host(`${DOMAIN}`)"
-      - "traefik.enable=true"
-      - "traefik.backend=mtg"
-      - "traefik.docker.network=web"
-      - "traefik.port=3128"
-      # - "traefik.http.routers.mtg.entrypoints=websecure"
-      # - "traefik.http.routers.mtg.tls.certresolver=mydnschallenge"
+      - TUNNEL_TOKEN
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - mtg
