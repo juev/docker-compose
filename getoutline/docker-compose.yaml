@@ -1,0 +1,55 @@
+version: "3.2"
+services:
+
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:latest
+    env_file: ./env
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - ./data/storage:/var/lib/outline/data
+    depends_on:
+      - postgres
+      - redis
+
+  redis:
+    image: redis
+    env_file: ./env
+    # ports:
+    #   - "6379:6379"
+    # volumes:
+    #   - ./redis.conf:/redis.conf
+    # command: ["redis-server", "/redis.conf"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+  postgres:
+    image: postgres
+    env_file: ./env
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready -d outline -U user"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'outline'
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - outline
