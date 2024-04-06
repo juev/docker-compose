@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  mycorrhiza:
+    build: .
+    container_name: mycorrhiza
+    user: root
+    volumes:
+      - ./data:/wiki
+    restart: always
+    # ports:
+    #   - "1737:1737"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - mycorrhiza
