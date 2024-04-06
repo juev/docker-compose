@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  yarr:
+    build: .
+    container_name: yarr
+    user: root
+    volumes:
+      - ./data:/data
+    restart: always
+    # ports:
+    #   - "7070:7070"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    environment:
+      - TUNNEL_TOKEN=token
+    command: 'tunnel run'
+    restart: always
+    read_only: true
+    user: root
+    depends_on:
+      - yarr
