@@ -13,6 +13,8 @@ services:
     volumes:
       - ./etc/bitlbee:/usr/local/etc/bitlbee
       - bitlbee_data:/var/lib/bitlbee
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
   znc:
     image: lscr.io/linuxserver/znc:latest
     container_name: znc

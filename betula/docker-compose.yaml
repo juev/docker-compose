@@ -7,6 +7,8 @@ services:
     volumes:
       - ./data:/data
     restart: always
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
     # ports:
     #   - "1738:1738"
 

@@ -9,6 +9,8 @@ services:
       - $PWD/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
   cloudflared:
     image: cloudflare/cloudflared:latest
     restart: always

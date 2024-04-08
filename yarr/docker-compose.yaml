@@ -9,6 +9,8 @@ services:
     restart: always
     # ports:
     #   - "7070:7070"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
