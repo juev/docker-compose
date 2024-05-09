@@ -1,6 +1,5 @@
-version: '3'
-
 services:
+
   dokuwiki:
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
@@ -10,18 +9,7 @@ services:
       - TZ=Europe/Moscow
     volumes:
       - ./data:/config
-    # ports:
-    #   - 80:80
+    ports:
+      - 80:80
     #   - 443:443 #optional
     restart: always
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - dokuwiki

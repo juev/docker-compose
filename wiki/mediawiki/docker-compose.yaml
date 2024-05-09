@@ -1,8 +1,3 @@
-# MediaWiki with MariaDB
-#
-# Access via "http://localhost:8080"
-#   (or "http://$(docker-machine ip):8080" if using docker-machine)
-version: '3'
 services:
   mediawiki:
     image: mediawiki

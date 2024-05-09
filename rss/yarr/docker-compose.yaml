@@ -1,5 +1,5 @@
-version: '3.5'
 services:
+
   yarr:
     build: .
     container_name: yarr
@@ -7,18 +7,7 @@ services:
     volumes:
       - ./data:/data
     restart: always
-    # ports:
-    #   - "7070:7070"
+    ports:
+      - "7070:7070"
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - yarr

@@ -1,6 +1,5 @@
-version: "3.7"
-
 services:
+
   caddy:
     image: juev-caddy:latest
     build: ./
@@ -11,21 +10,7 @@ services:
       - caddy_config:/config
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: always
-    user: root
-    #entrypoint: cloudflared tunnel run
-    command: tunnel run
-    container_name: cloudflared
-    depends_on:
-      - caddy
-    volumes:
-      - $PWD/cloudflared:/root/.cloudflared
+
 volumes:
   caddy_data:
   caddy_config:
-networks:
-  default:
-    name: caddy-network
-    external: true

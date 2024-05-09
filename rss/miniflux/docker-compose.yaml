@@ -1,6 +1,5 @@
-version: '3'
-
 services:
+
   miniflux:
     image: miniflux/miniflux:latest
     restart: always
@@ -17,7 +16,9 @@ services:
       - POCKET_CONSUMER_KEY
       - BASE_URL=https://reader.example.org
       - TZ=Europe/Moscow
-
+    ports:
+      - "127.0.0.1:3005:8080"
+      
   db:
     image: postgres:15
     restart: always
@@ -31,14 +32,3 @@ services:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
       start_period: 30s
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - miniflux

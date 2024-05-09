@@ -1,6 +1,5 @@
----
-version: "3"
 services:
+
   wireguard:
     image: linuxserver/wireguard
     container_name: wireguard

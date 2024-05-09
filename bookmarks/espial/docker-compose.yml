@@ -1,5 +1,5 @@
-version: '3'
 services:
+
   espial:
     image: 'jonschoning/espial:espial'
     restart: always
@@ -15,13 +15,6 @@ services:
       # - ARCHIVE_SOCKS_PROXY_HOST=localhost
       # - ARCHIVE_SOCKS_PROXY_PORT=8888
       # - SOURCE_CODE_URI=https://github.com/jonschoning/espial
-    labels:
-      - "traefik.http.routers.espial.rule=Host(`${DOMAIN}`)"
-      - "traefik.enable=true"
-      - "traefik.backend=espial"
-      - "traefik.docker.network=web"
-      - "traefik.port=3000"
-      # - "traefik.http.routers.espial.entrypoints=websecure"
-      # - "traefik.http.routers.espial.tls.certresolver=mydnschallenge"
+
 volumes:
   data:

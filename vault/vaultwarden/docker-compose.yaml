@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   vaultwarden:
     container_name: vaultwarden
@@ -11,14 +9,5 @@ services:
       - env
     volumes:
       - ./data:/data
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - vaultwarden
+    ports:
+      - "127.0.0.1:3004:80"

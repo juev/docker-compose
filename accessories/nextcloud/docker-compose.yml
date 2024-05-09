@@ -1,4 +1,5 @@
 services:
+
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
     init: true
@@ -37,19 +38,6 @@ services:
       # - nextcloud-aio # Is needed when you want to create the nextcloud-aio network with ipv6-support using this file, see the network config at the bottom of the file
     # # Uncomment the following line when using SELinux
     # security_opt: ["label:disable"]
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - nextcloud-aio-mastercontainer
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   # # Optional: Caddy reverse proxy. See https://github.com/nextcloud/all-in-one/blob/main/reverse-proxy.md
   # # You can find further examples here: https://github.com/nextcloud/all-in-one/discussions/588

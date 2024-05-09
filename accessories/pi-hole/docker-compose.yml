@@ -1,6 +1,5 @@
----
-version: "3"
 services:
+
   pihole:
     container_name: pihole
     domainname: "${DOMAIN}"
@@ -31,18 +30,6 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-    networks:
-      - web
-    labels:
-      - "traefik.http.routers.pihole.rule=Host(`${DOMAIN}`)"
-      - "traefik.enable=true"
-      - "traefik.backend=pihole"
-      - "traefik.docker.network=web"
-      # - "traefik.http.routers.pihole.entrypoints=websecure"
-      # - "traefik.http.routers.pihole.tls.certresolver=mydnschallenge"
-      - "traefik.http.services.pihole.loadbalancer.server.port=80"
-networks:
-  web:
-    external: true
+
 volumes:
   etc:

@@ -1,0 +1,16 @@
+services:
+
+  webdav:
+    image: bytemark/webdav
+    restart: always
+    environment:
+      - AUTH_TYPE
+      - USERNAME
+      - PASSWORD
+      - TZ=Europe/Moscow
+    volumes:
+      - ./dav:/var/lib/dav
+      #- /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "127.0.0.1:3002:80"

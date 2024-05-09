@@ -1,22 +1,11 @@
-version: '3'
 services:
+
   mtg:
     image: 'nineseconds/mtg:stable'
     restart: always
-    # ports:
-    #   - "443:443"
+    ports:
+      - "443:443"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       # - /etc/localtime:/etc/localtime:ro
     command: simple-run 0.0.0.0:443 $SECRET
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - mtg

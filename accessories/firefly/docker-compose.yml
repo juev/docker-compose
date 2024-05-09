@@ -1,6 +1,5 @@
-version: '3.3'
-
 services:
+
   fireflyiii:
     container_name: fireflyiii
     image: jc5x/firefly-iii:latest
@@ -12,14 +11,6 @@ services:
     networks:
       - internal
       - web
-    labels:
-      - "traefik.http.routers.fireflyiii.rule=Host(`${DOMAIN}`)"
-      - "traefik.enable=true"
-      - "traefik.backend=fireflyiii"
-      - "traefik.docker.network=web"
-      - "traefik.port=80"
-      # - "traefik.http.routers.fireflyiii.entrypoints=websecure"
-      # - "traefik.http.routers.fireflyiii.tls.certresolver=mydnschallenge"
 
   fireflyiiidb:
     container_name: firefluiiidb

@@ -1,12 +1,10 @@
-# Docker Compose file for a Baikal server
-
-version: "2"
 services:
+
   baikal:
     image: ckulka/baikal:nginx
     restart: always
-    #ports:
-    #  - "127.0.0.1:8083:80"
+    ports:
+     - "127.0.0.1:8083:80"
     volumes:
       - config:/var/www/baikal/config
       - data:/var/www/baikal/Specific
@@ -14,8 +12,3 @@ services:
 volumes:
   config:
   data:
-
-networks:
-  default:
-    name: caddy-network
-    external: true

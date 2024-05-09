@@ -1,5 +1,5 @@
-version: '3.5'
 services:
+
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
@@ -11,14 +11,3 @@ services:
         source: ./data/media
         target: /media
     restart: always
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - jellyfin

@@ -1,20 +1,10 @@
-version: '3'
-
 services:
+
   linkding:
     container_name: "${LD_CONTAINER_NAME:-linkding}"
     image: sissbruecker/linkding:latest
     volumes:
       - "${LD_HOST_DATA_DIR:-./data}:/etc/linkding/data"
     restart: always
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - linkding
+    ports:
+      - "127.0.0.1:3006:9090"

@@ -1,5 +1,5 @@
-version: '3.5'
 services:
+
   mycorrhiza:
     build: .
     container_name: mycorrhiza
@@ -9,16 +9,5 @@ services:
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
-    # ports:
-    #   - "1737:1737"
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    environment:
-      - TUNNEL_TOKEN=token
-    command: 'tunnel run'
-    restart: always
-    read_only: true
-    user: root
-    depends_on:
-      - mycorrhiza
+    ports:
+      - "1737:1737"
