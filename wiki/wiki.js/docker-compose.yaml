@@ -1,0 +1,12 @@
+services:
+
+  wiki:
+    image: ghcr.io/requarks/wiki:2
+    environment:
+      DB_TYPE: sqlite
+      DB_FILEPATH: /db/database.sqlite
+    restart: unless-stopped
+    volumes:
+      - ./data:/db
+    ports:
+      - "80:3000"
