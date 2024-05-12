@@ -3,7 +3,7 @@
 Firstly create ~.env~ file from example and fill values:
 
 #+begin_src shell
-  $ cp .env-example .env
+  $ cp env.example .env
 #+end_src
 
 After that just run containers:
