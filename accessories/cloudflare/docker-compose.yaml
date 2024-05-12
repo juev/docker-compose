@@ -1,0 +1,10 @@
+services:
+  cloudflared:
+    network_mode: host
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    restart: always
+    read_only: true
+    user: root
+    deploy:
+     replicas: 2

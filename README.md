@@ -22,6 +22,7 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
 - [accessories](./accessories/) – all sorts of different and possibly useful things
   - [baikal](./accessories/baikal/) – Baïkal is a lightweight CalDAV+CardDAV server
   - [caddy](./accessories/caddy/) – The most advanced HTTPS server in the world. Include cloudflare-dns TLS
+  - [cloudflare](./accessories/cloudflare/) – Cloudflare Tunnel client (formerly Argo Tunnel)
   - [firefly](./accessories/firefly/) – a personal finances manager
   - [irc](./accessories/irc/) – Run bitlbee with TLS and custom protocols in a container
   - [jellyfin](./accessories/jellyfin/) – The Free Software Media System
@@ -29,6 +30,7 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
   - [nextcloud](./accessories/nextcloud/) – The official Nextcloud installation method. Provides easy deployment and maintenance with most features included in this one Nextcloud instance
   - [pi-hole](./accessories/pi-hole/) – Network-wide Ad Blocking
   - [traefik](./accessories/traefik/) – Traefik, The Cloud Native Application Proxy
+  - [watchtower](./accessories/watchtower/) - A container-based solution for automating Docker container base image updates
   - [webdav](./accessories/webdav/) – Basic WebDAV server
 - [bookmarks](./bookmarks/) – services for creating web bookmarks
   - [betula](./bookmarks/betula/) – a federated personal link collection manager
