@@ -9,7 +9,7 @@ values.
 
 ### Cloudflare tunnel
 
-TODO: update section
+You can use files to run: [accessories/cloudflare](./accessories/cloudflare/)
 
 By default, many solutions use Cloudflare tunnel to provide access to the service. For it to work, you need to set the
 TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel, read the official documentation:
