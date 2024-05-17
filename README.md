@@ -27,6 +27,7 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
   - [irc](./accessories/irc/) – Run bitlbee with TLS and custom protocols in a container
   - [jellyfin](./accessories/jellyfin/) – The Free Software Media System
   - [mtg](./accessories/mtg/) – Highly opinionated MTPROTO proxy for Telegram
+  - [n8n](./accessories/n8n/) – n8n is a free and source-available workflow automation tool
   - [nextcloud](./accessories/nextcloud/) – The official Nextcloud installation method. Provides easy deployment and maintenance with most features included in this one Nextcloud instance
   - [pi-hole](./accessories/pi-hole/) – Network-wide Ad Blocking
   - [traefik](./accessories/traefik/) – Traefik, The Cloud Native Application Proxy

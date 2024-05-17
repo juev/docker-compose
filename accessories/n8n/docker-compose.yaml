@@ -1,0 +1,18 @@
+services:
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    user: root
+    environment:
+      - N8N_HOST=n8n.example.org
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://n8n.example.org/
+      - GENERIC_TIMEZONE=Europe/Moscow
+    volumes:
+      - ./data:/root/.n8n
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "127.0.0.1:3003:5678"
