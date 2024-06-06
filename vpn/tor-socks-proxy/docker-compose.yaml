@@ -1,0 +1,10 @@
+services:
+  tor-socks-proxy:
+    image: ghcr.io/peterdavehello/tor-socks-proxy
+    restart: always
+    container_name: tor-socks-proxy
+    ports:
+      - "127.0.0.1:8853:53/udp"
+      - "127.0.0.1:9150:9150/tcp"
+    volumes:
+      - ./torrc:/etc/tor/torrc
