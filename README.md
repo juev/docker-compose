@@ -46,11 +46,13 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
   - [silverbullet](./notes/silverbullet/) – SilverBullet is a note-taking application optimized for people with a [hacker mindset](https://en.wikipedia.org/wiki/Hacker)
 - [rss](./rss/) – rss reader services
   - [freshrss](./rss/freshrss/) – FreshRSS is a self-hosted RSS feed aggregator
+  - [fusion](./rss/fusion/) – A lightweight, self-hosted friendly RSS aggregator and reader
   - [miniflux](./rss/miniflux/) – Miniflux is a minimalist and opinionated feed reader
   - [yarr](./rss/yarr/) – yarr (yet another rss reader) is a web-based feed aggregator which can be used both as a desktop application and a personal self-hosted server
 - [vault](./vault/) – password storage services
   - [vaultwarden](./vault/vaultwarden/) – Vaultwarden is a self-hosted server compatible with Bitwarden clients, written in Rust and with various features
 - [vpn](./vpn/) – services for the organization of VPN networks
+  - [tor-socks-proxy](./vpn/tor-socks-proxy/) – Tiny Docker image (10MB) as Tor SOCKS5 proxy
   - [v2ray](./vpn/v2ray/) – is a platform for building proxies to bypass network restrictions
   - [wireguard](./vpn/wireguard/) – WireGuard is a simple, fast and modern VPN that uses state-of-the-art cryptography and runs on various platforms
 - [wiki](./wiki/) – wiki services
