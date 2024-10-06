@@ -1,0 +1,34 @@
+services:
+  ## Searxng
+  searxng:
+    hostname: searxng-backend
+    image: searxng/searxng
+    environment:
+      - BASE_URL=https://searxng.example.org
+      - INSTANCE_NAME=searxng
+      - BIND_ADDRESS=0.0.0.0:80
+      - SEARXNG_REDIS_URL=redis://@redis:6379/0
+      - SEARXNG_STATIC_USE_HASH=true
+      - SEARXNG_IMAGE_PROXY=true
+      - SEARXNG_LIMITER=false
+
+      # run `openssl rand -hex 32` in your terminal for generated value
+      - SEARXNG_SECRET=0a34b370b494594f1c3c2075dd1ff8e7cb76e7143d2fab7067bdecaf465182bb
+    volumes:
+      - ./searxng/settings.yml:/usr/local/searxng/searx/settings.yml:ro
+      - ./searxng/limiter.toml:/etc/searxng/limiter.toml:ro
+    ports:
+      - "127.0.0.1:3007:80"
+
+  ##Support Services
+  redis:
+    container_name: redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+
+volumes:
+  #support volumes
+  redis:

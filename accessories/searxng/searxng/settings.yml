@@ -1,0 +1,103 @@
+# https://github.com/searxng/searxng/blob/master/searx/settings.yml
+
+use_default_settings: true
+
+search:
+  safe_search: 0
+  autocomplete: "yandex"
+  favicon_resolver: "yandex"
+
+enabled_plugins:
+#   # these plugins are enabled if nothing is configured ..
+  - 'Basic Calculator'
+  - 'Hash plugin'
+  - 'Self Information'
+  - 'Tracker URL remover'
+  - 'Ahmia blacklist'  # activation depends on outgoing.using_tor_proxy
+#   # these plugins are disabled if nothing is configured ..
+  - 'Hostnames plugin'  # see 'hostnames' configuration below
+  - 'Open Access DOI rewrite'
+#   - 'Tor check plugin'
+#   # Read the docs before activate: auto-detection of the language could be
+#   # detrimental to users expectations / users can activate the plugin in the
+#   # preferences if they want.
+#   - 'Autodetect search language'
+
+# Configuration of the "Hostnames plugin":
+#
+# hostnames:
+#   replace:
+#     '(.*\.)?youtube\.com$': 'invidious.example.com'
+#     '(.*\.)?youtu\.be$': 'invidious.example.com'
+#     '(.*\.)?reddit\.com$': 'teddit.example.com'
+#     '(.*\.)?redd\.it$': 'teddit.example.com'
+#     '(www\.)?twitter\.com$': 'nitter.example.com'
+#   remove:
+#     - '(.*\.)?facebook.com$'
+#   low_priority:
+#     - '(.*\.)?google(\..*)?$'
+#   high_priority:
+#     - '(.*\.)?wikipedia.org$'
+#
+# Alternatively you can use external files for configuring the "Hostnames plugin":
+#
+# hostnames:
+#  replace: 'rewrite-hosts.yml'
+#
+# Content of 'rewrite-hosts.yml' (place the file in the same directory as 'settings.yml'):
+# '(.*\.)?youtube\.com$': 'invidious.example.com'
+# '(.*\.)?youtu\.be$': 'invidious.example.com'
+#
+
+engines:
+  - name: google
+    engine: google
+    shortcut: go
+    # see https://docs.searxng.org/src/searx.engines.google.html#module-searx.engines.google
+    use_mobile_ui: false
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+
+  - name: duckduckgo images
+    engine: duckduckgo_extra
+    categories: [images, web]
+    ddg_category: images
+    shortcut: ddi
+    timeout: 3.0
+
+  - name: duckduckgo weather
+    engine: duckduckgo_weather
+    shortcut: ddw
+
+  - name: yandex
+    engine: yandex
+    categories: general
+    search_type: web
+    shortcut: yd
+
+  - name: yandex images
+    engine: yandex
+    categories: images
+    search_type: images
+    shortcut: ydi
+
+  - name: yandex music
+    engine: yandex_music
+    shortcut: ydm
+
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    base_url: 'https://{language}.wikipedia.org/'
+
+doi_resolvers:
+  oadoi.org: 'https://oadoi.org/'
+  doi.org: 'https://doi.org/'
+  doai.io: 'https://dissem.in/'
+  sci-hub.se: 'https://sci-hub.se/'
+  sci-hub.st: 'https://sci-hub.st/'
+  sci-hub.ru: 'https://sci-hub.ru/'
+
+default_doi_resolver: 'sci-hub.ru'
