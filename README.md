@@ -33,6 +33,7 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
   - [traefik](./accessories/traefik/) – Traefik, The Cloud Native Application Proxy
   - [watchtower](./accessories/watchtower/) - A container-based solution for automating Docker container base image updates
   - [webdav](./accessories/webdav/) – Basic WebDAV server
+  - [searxng](./accessories/searxng/) – SearXNG is a free internet metasearch engine which aggregates results from various search services and databases. Users are neither tracked nor profiled
 - [bookmarks](./bookmarks/) – services for creating web bookmarks
   - [betula](./bookmarks/betula/) – a federated personal link collection manager
   - [espial](./bookmarks/espial/) – Espial is an open-source, web-based bookmarking server
