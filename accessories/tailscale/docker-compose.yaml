@@ -1,0 +1,17 @@
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    hostname: router
+    network_mode: host
+    environment:
+      - TS_AUTHKEY=tskey-auth-k3aaa
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_ROUTES=192.168.1.0/24
+    volumes:
+      - ${PWD}/tailscale/state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
