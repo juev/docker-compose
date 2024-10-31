@@ -1,11 +1,10 @@
 services:
-
   headscale:
     container_name: headscale
     image: headscale/headscale:latest
     restart: unless-stopped
     # ports:
-      # - 8080:8080
+    # - 8080:8080
     volumes:
       - ./config:/etc/headscale
       - ./data:/var/lib/headscale
@@ -17,11 +16,14 @@ services:
     restart: unless-stopped
 
   caddy:
-    image: caddy:alpine
+    # image: caddy:alpine
+    build: .
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
+      # - "80:80"
+      - "8443:8443"
+      - "8443:8443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+    environment:
+      - CF_API_TOKEN=token

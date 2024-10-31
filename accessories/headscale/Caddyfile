@@ -1,4 +1,9 @@
-https://example.org:443 {
+https://ns.juev.org:8443 {
     reverse_proxy /web* http://headscale-ui:8080
     reverse_proxy * http://headscale:8080
+
+    tls {
+        dns cloudflare {env.CF_API_TOKEN}
+        resolvers 1.1.1.1
+    }
 }
