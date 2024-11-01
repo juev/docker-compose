@@ -1,0 +1,20 @@
+// Example/default ACLs for unrestricted connections.
+{
+	// Access control lists.
+	"acls": [
+		// Match absolutely everything.
+		// Comment this section out if you want to define specific restrictions.
+		//{"action": "accept", "users": ["*"], "ports": ["*:*"]},
+		{"action": "accept", "src": ["*"], "dst": ["*:*"]},
+	],
+	"ssh": [
+		// Allow all users to SSH into their own devices in check mode.
+		// Comment this section out if you want to define specific restrictions.
+		{
+			"action": "accept",
+			"src":    ["*"],
+			"dst":    ["*:*"],
+			"users":  ["autogroup:nonroot", "root"],
+		},
+	],
+}
