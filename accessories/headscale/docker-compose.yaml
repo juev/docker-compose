@@ -25,5 +25,11 @@ services:
       - "8443:8443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     environment:
       - CF_API_TOKEN=token
+
+volumes:
+  caddy_data:
+  caddy_config:
