@@ -2,9 +2,9 @@ services:
   cloudflared:
     network_mode: host
     image: cloudflare/cloudflared:latest
-    command: tunnel run
+    command: tunnel --no-autoupdate run --token $TUNNEL_TOKEN
     restart: always
     read_only: true
     user: root
     deploy:
-     replicas: 2
+      replicas: 2
