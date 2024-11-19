@@ -1,5 +1,4 @@
 services:
-
   freshrss:
     image: freshrss/freshrss:edge
     container_name: freshrss
@@ -7,12 +6,15 @@ services:
     volumes:
       - ./data:/var/www/FreshRSS/data
       - ./extensions:/var/www/FreshRSS/extensions
-      - ./config.custom.php:/var/www/FreshRSS/data/config.custom.php
-      - ./config-user.custom.php:/var/www/FreshRSS/data/config-user.custom.php
     ports:
-      - "8080:80"
+      - "127.0.0.1:3009:80"
     environment:
       TZ: Europe/Moscow
-      CRON_MIN: '2,32'
+      CRON_MIN: "2,32"
       LISTEN: 0.0.0.0:80
       # TRUSTED_PROXY: 172.16.0.1/12 192.168.0.1/16
+      # ADMIN_EMAIL: admin@example.net
+      # PUBLISHED_PORT: 3009
+      # ADMIN_PASSWORD: freshrss
+      # ADMIN_API_PASSWORD: freshrss
+      BASE_URL: https://freshrss.example.net
