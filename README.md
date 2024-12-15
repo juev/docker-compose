@@ -31,6 +31,7 @@ TUNNEL_TOKEN variable in the `.env` file. For documentation on using the tunnel,
   - [nextcloud](./accessories/nextcloud/) – The official Nextcloud installation method. Provides easy deployment and maintenance with most features included in this one Nextcloud instance
   - [pi-hole](./accessories/pi-hole/) – Network-wide Ad Blocking
   - [traefik](./accessories/traefik/) – Traefik, The Cloud Native Application Proxy
+  - [versitygw](./accessories/versitygw/) – versity s3 gateway
   - [watchtower](./accessories/watchtower/) - A container-based solution for automating Docker container base image updates
   - [webdav](./accessories/webdav/) – Basic WebDAV server
   - [searxng](./accessories/searxng/) – SearXNG is a free internet metasearch engine which aggregates results from various search services and databases. Users are neither tracked nor profiled

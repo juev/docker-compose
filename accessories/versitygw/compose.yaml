@@ -1,0 +1,11 @@
+services:
+  versitygw:
+    image: ghcr.io/versity/versitygw:latest
+    restart: always
+    volumes:
+      - ./data:/tmp/gw
+    command: posix /tmp/gw
+    environment:
+      - TZ=Europe/Moscow
+      - ROOT_ACCESS_KEY
+      - ROOT_SECRET_KEY
